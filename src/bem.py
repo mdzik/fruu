@@ -123,7 +123,7 @@ class bemMain:
         plt.subplot(313, title='Local Lift coef.')        
         plt.plot(self.r_r, cl_r)
 
-        plt.show()  
+     #   plt.show()  
     
     def performMultipleAnalyse(self, **kargs):
         plt.figure(2)           
@@ -162,6 +162,8 @@ class bemMain:
         Vs = list()        
         Etas = list()
         
+        plt.figure(2)
+
         if ( mode == 'rpm' ):
             self.Omega = RPM0
             for i in range(0,N):
@@ -170,12 +172,12 @@ class bemMain:
                 Ts.append( self.T )  
                 RPMs.append(self.Omega * 30. / math.pi )
                 self.Omega += dRPM
-            plt.figure(2)
+            
             plt.subplot(211, title='Power vs Speed')
             plt.plot(RPMs, Ps)
             plt.subplot(212, title='Thrust vs Speed')        
             plt.plot(RPMs, Ts)        
-            plt.show()
+           # plt.show()
         
         if ( mode == 'velocity' ):
             self.V = V0
@@ -193,7 +195,7 @@ class bemMain:
             plt.plot(Vs, Ts)
             plt.subplot(313, title='Eff vs Speed')        
             plt.plot(Vs, Etas)        
-            plt.show()        
+          #  plt.show()        
             
         if ( mode == 'power' ):
             self.V = V0
@@ -217,7 +219,7 @@ class bemMain:
             plt.plot(Vs, Etas)      
             plt.subplot(414, title='RPM vs Speed')        
             plt.plot(Vs, RPMs)             
-            plt.show()            
+                      
     
 
             
@@ -274,7 +276,7 @@ class bemMain:
             plt.subplot(313, title='Local Re')    
             plt.plot(self.r_r, Res )
 
-            plt.show()
+         #   plt.show()
         
         
     def storeLocals( self ):        
@@ -351,8 +353,8 @@ class bemMain:
         c_f = c_f.reshape( c_f.shape[0] )    
         r_f = r_f.reshape( r_f.shape[0] )    
         
-        beta_int = scipy.interpolate.interp1d(r_f, beta_f, kind='cubic')  
-        c_int = scipy.interpolate.interp1d(r_f, c_f, kind='cubic')       
+        beta_int = scipy.interpolate.interp1d(r_f, beta_f)#, kind='cubic')  
+        c_int = scipy.interpolate.interp1d(r_f, c_f)#, kind='cubic')       
         
         self.R0 = r_f[0]
         self.R = r_f[r_f.shape[0] - 1]
@@ -567,7 +569,8 @@ def main():
         print mB.performSingleAnalyse( R=0.0751, V=35., Omega=25000., plot=True )
         
         print mB.performMultipleAnalyse( R=0.0751, V=15, Omega=25000, V0=.5, V1=60, mode='power', RPM1=15000., RPM0=5000, P=400. )
-       
+        
+        plt.show()  
 
 
 if __name__ == "__main__":
